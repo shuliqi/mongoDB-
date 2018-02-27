@@ -1,0 +1,96 @@
+| 切换或使用数据库    | use mymongodb                            |
+| ----------- | ---------------------------------------- |
+| 看所有的库       | show dbs                                 |
+| 删除当前使用数据库   | db.dropDatabase()                        |
+| 克隆所有的库到当前连接 | db.cloneDatabase(“192.160.1.1”)          |
+| 复制指定的库      | db.cloneDatabase(“sourcedb”,”targetdb”,”192.168.1.1”) |
+| 查看当前数据库     | db.getName()                             |
+| 当前数据库状态     | db.stats()                               |
+| 当前数据库版本     | db.version()                             |
+| 查看当前数据库的连接  | db.getMongo()                            |
+| **用户操作**    |                                          |
+| 添加用户        | db.addUser(“user_name”, “password”, true) |
+| 用户认证        | db.auth(“username”, “password”)          |
+| 显示所有用户      | show users;                              |
+| 删除用户        | db.removeUser(“username”);               |
+| **集合基本信息**  |                                          |
+| 查询集合的数据条数   | db.myCollection.count();                 |
+| 查看数据空间大小    | db.myCollection.dataSize();              |
+| 查看集合所在的数据库  | db.myCollection.getDB();                 |
+| 当前聚集的状态     | db.myCollection.stats();                 |
+| 当前集合的总大小    | db.myCollection.totalSize();             |
+| 集合储存空间大小    | db.myCollection.storageSize();           |
+| Shard版本信息   | db.myCollection.getShardVersion();       |
+| 集合重命名       | db.myCollection.renameCollection(“targetCollection”); |
+| 删除集合        | db.myCollection.drop();                  |
+| **集合数据增删改** |                                          |
+|             |                                          |
+| 添加记录        | db.myCollection.save({mykey:”t_key”,myvalue:”t-value”}); |
+| 删除记录        | db.myCollection.remove({mykey:”t_key”}); |
+| 修改记录        | db.myCollection.update({condition: xx}, {$set: {field: ‘changefield’}}, false, true); |
+| 查询并修改记录     | db.myCollection.findAndModify(query: {condition1: {gte: XX}},    sort: {condition2: -1},    update: {set: {target1: 'yy'}, $inc: {target2: 2}}, remove: true}); |
+| **集合数据查询**  |                                          |
+| 查询所有记录      | db.myCollection.find();                  |
+| 查询第一条记录     | db.myCollection.findOne();               |
+| 数据去重        | db.myCollection.distinct(“fieldname”);   |
+| 数值区间查询      | db.myCollection.find({numfield:{$gte:nn}}); |
+| 字符串查询       | db.myCollection.find({targetfield:/ABC/}); |
+| 指定字段查询      | db.myCollection.find({},{field1:’abc’,field2:nnn}); |
+| 指定返回条数查询    | db.myCollection.find().limit(m).skip(n); |
+| 排序          | db.myCollection.find().sort({targetfield:-1}); //降序 |
+| 统计记录数       | db.myCollection.find({target: n }).count(); |
+| **索引操作**    |                                          |
+|             |                                          |
+| 创建          | db.myCollection.ensureIndex({targetfield: 1}); |
+| 查询所有索引      | db.myCollection.getIndexes();            |
+| 查询所有索引大小    | db.myCollection.totalIndexSize();        |
+| 查询索引信息      | db.myCollection.reIndex({targetfield: 1}); |
+| 删除指定索引      | db.myCollection.dropIndex(“targetfield”); |
+| 删除所有索引      | db.myCollection.dropIndexes();           |
+| **辅助命令**    |                                          |
+|             |                                          |
+| 查询错误信息      | db.getPrevError();                       |
+| 清空错误信息      | db.resetError();                         |
+| 各种帮助信息      | help; db.help(); db.myCollection.help(); db.myCollection.find().help(); rs.help(); |
+
+启动：
+
+mongod --dbpath=C:\mongodb\db
+
+mongod --config mongo.config
+
+
+
+
+
+
+
+
+
+### 创建用户
+
+db.createUser(
+  {
+    user: "test",
+    pwd: "test",
+    roles: [ { role: "userAdmin", db: "test" } ]
+  }
+)
+
+
+
+->use Admin         (切换到创建用户)
+
+->db.TestDb          (创建数据库)
+
+->db.addUser(“userName”,”Pwd”)    创建用户
+
+->db.auth(“userName”,”Pwd”)       设置用户为允许连接的用户
+
+->db.createCollection(“TableName”)                                     创建表
+
+->showcollections                          查看表是否创建成功
+
+->db.TableName.Save({age:1})                 添加数据
+
+->db.TableName.find()                        查看添加的数据是否成功（如果没有查询到任何的结果，说明添加失败）
